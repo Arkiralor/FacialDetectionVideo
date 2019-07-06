@@ -18,7 +18,7 @@ vid = cv2.VideoCapture(0)
 check, frame = vid.read()
 # The read() function returns a tuple, a check (boolean value AFAIK) and the frame which is the current frame.
 
-# Loop counter initialised as '1'.
+# Frame counter initialised as '1'.
 a = 1
 
 # Creating a classifying object for the individual frames to be compared to. The XML file can be found on Github.
@@ -26,7 +26,7 @@ face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
 # As long as the boolean returned is TRUE i.e, as long as a video playback is detected.
 while True:
-    # Increment the loop counter by '1'.
+    # Increment the frame counter by '1'.
     a = a +1
 
     # Update the check variable and frame from the video buffer.
@@ -52,9 +52,9 @@ while True:
     # Show the individual frame.
     cv2.imshow('Playback', img_res)
     # Wait for 17 milliseconds, the go to the next statement.
-    # For a 60fps video, choose a time delay of 16.67ms.
-    # For a 24fps (23.997fps) video, choose a time delay of 41.68ms.
-    # For a 30fps video, choose a time delay of 33.33ms.
+    # For a 60fps video, choose a time delay of at least 16.67ms.
+    # For a 24fps (23.997fps) video, choose a time delay of at least 41.68ms.
+    # For a 30fps video, choose a time delay of at least 33.33ms.
     key = cv2.waitKey(17)
 
     # Break this loop if 'Q' is pressed on the keyboard.
