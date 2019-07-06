@@ -2,7 +2,7 @@
 
 # WARNING! This script may consume a lot of resources depending on the resolution and bit-depth of the video played.
 
-# NOTE: The included Cascade classifier apparently does NOT work well with dar-skinned individuals wearing white clothes
+# NOTE: The included Cascade classifier apparently does NOT work well with dark-skinned individuals wearing white clothes
 # on a white background.
 
 # Classifier set provided by OpenCV @ https://github.com/opencv/opencv/tree/master/data/haarcascades
