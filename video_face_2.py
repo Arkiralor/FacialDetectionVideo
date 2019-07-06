@@ -61,7 +61,7 @@ while True:
     for x, y, w, h in profile_faces:
         img = cv2.rectangle(frame, (x, y), (x + w, y + h), (17, 255, 255), 3) # Yellow.
 
-    # We can resize the frame here if want to. I've left it as is.
+    # We can resize the frame here if want to. I've halved both the axes.
     img_res = cv2.resize(frame, (int(frame.shape[1]/2), int(frame.shape[0]/2)))
 
     # Show the individual frame.
