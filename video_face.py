@@ -18,7 +18,7 @@ vid = cv2.VideoCapture(0)
 check, frame = vid.read()
 # The read() function returns a tuple, a check (boolean value AFAIK) and the frame which is the current frame.
 
-# Loop counter initialised as '1'.
+# Frame counter initialised as '1'.
 a = 1
 
 # Creating a classifying object for the individual frames to be compared to. The XML file can be found on Github.
@@ -26,7 +26,7 @@ face_cascade = cv2.CascadeClassifier("Classifiers/haarcascade_frontalface_defaul
 
 # As long as the boolean returned is TRUE i.e, as long as a video playback is detected.
 while True:
-    # Increment the loop counter by '1'.
+    # Increment the frame counter by '1'.
     a = a +1
 
     # Update the check variable and frame from the video buffer.
