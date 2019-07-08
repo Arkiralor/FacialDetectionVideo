@@ -18,7 +18,7 @@ vid = cv2.VideoCapture(0)
 check, frame = vid.read()
 # The read() function returns a tuple, a check (boolean value AFAIK) and the frame which is the current frame.
 
-# Frame counter initialised as '1'.
+# Loop counter initialised as '1'.
 a = 1
 
 # Creating a classifying object for the individual frames to be compared to. The XML file can be found on Github.
@@ -29,7 +29,7 @@ profile_cascade = cv2.CascadeClassifier("Classifiers/haarcascade_profileface.xml
 
 # As long as the boolean returned is TRUE i.e, as long as a video playback is detected.
 while True:
-    # Increment the frame counter by '1'.
+    # Increment the loop counter by '1'.
     a = a +1
 
     # Update the check variable and frame from the video buffer.
@@ -43,26 +43,36 @@ while True:
     # by comparing the B&W frame to the classifying object (training data).
     # The parameters used are the ones used most commonly with this files.
     # Try changing them to see what happens.
-    faces = face_cascade.detectMultiScale(gry_img, scaleFactor=1.05, minNeighbors=5)
-    eyes = eye_cascade.detectMultiScale(gry_img, scaleFactor=1.30, minNeighbors=5)
-    glasses = glasses_cascade.detectMultiScale(gry_img, scaleFactor=1.35, minNeighbors=5)
+    faces = face_cascade.detectMultiScale(gry_img, scaleFactor=1.05, minNeighbors=10)
+    for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 1)  # Blue
+        gry_crp = gry_img[y:y + h, x:x + w]
+        crp_img = frame[y:y + h, x:x + w]
+
+        eyes = eye_cascade.detectMultiScale(gry_crp, scaleFactor=1.05, minNeighbors=5)
+        for (x, y, w, h) in eyes:
+            cv2.rectangle(crp_img, (x, y), (x + w, y + h), (255, 255, 24), 1)  # Cyan
+
+        glasses = glasses_cascade.detectMultiScale(gry_crp, scaleFactor=1.35, minNeighbors=5)
+        for (x, y, w, h) in glasses:
+            cv2.rectangle(crp_img, (x, y), (x + w, y + h), (31, 255, 31), 1)  # Green.
+
     profile_faces = profile_cascade.detectMultiScale(gry_img, scaleFactor=1.25, minNeighbors=5)
-
-    # Now, we mark the detected face with a rectangle
-    for x, y, w, h in faces:
-        frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 21, 21), 3) # Blue.
-
-    for x, y, w, h in eyes:
-        img = cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 24), 3) # Cyan.
-
-    for x, y, w, h in glasses:
-        img = cv2.rectangle(frame, (x, y), (x + w, y + h), (31, 255, 31), 3) # Green.
-
     for x, y, w, h in profile_faces:
-        img = cv2.rectangle(frame, (x, y), (x + w, y + h), (17, 255, 255), 3) # Yellow.
+        img = cv2.rectangle(frame, (x, y), (x + w, y + h), (17, 255, 255), 1)  # Yellow.
+        gry_crp = gry_img[y:y + h, x:x + w]
+        crp_img = frame[y:y + h, x:x + w]
 
-    # We can resize the frame here if want to. I've halved both the axes.
-    img_res = cv2.resize(frame, (int(frame.shape[1]/2), int(frame.shape[0]/2)))
+        eyes = eye_cascade.detectMultiScale(gry_crp, scaleFactor=1.05, minNeighbors=5)
+        for (x, y, w, h) in eyes:
+            cv2.rectangle(crp_img, (x, y), (x + w, y + h), (255, 255, 24), 1)  # Cyan
+
+        glasses = glasses_cascade.detectMultiScale(gry_crp, scaleFactor=1.35, minNeighbors=5)
+        for (x, y, w, h) in glasses:
+            cv2.rectangle(crp_img, (x, y), (x + w, y + h), (31, 255, 31), 1)  # Green.
+
+    # We can resize the frame here if want to. I've left it as is.
+    img_res = cv2.resize(frame, (int(frame.shape[1]/1), int(frame.shape[0]/1)))
 
     # Show the individual frame.
     cv2.imshow('Playback', img_res)
